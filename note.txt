@@ -1,0 +1,3 @@
+1.在main.js主入口文件中 引入的是App.vue文件  App.vue文件引入的router-view是在路由设置中的'/'下的组件
+2.在'/'组件指向default组件,而default组件中的router-view指向的是它的子路由 page文件夹下的index.vue文件
+3.在'/'路径下,输入/index就可以访问到page下面的index.vue组件页面
