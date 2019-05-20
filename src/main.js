@@ -6,8 +6,18 @@ import router from './router'
 import ElementUI from 'element-ui'// 引入element-ui框架
 import 'element-ui/lib/theme-chalk/index.css'
 
-import '@/assets/css/main.css'
+import '@/assets/css/main.css';
+Vue.directive('document-click',{
+  bind(el,bindings,vnode) {
+      document.addEventListener('click',bindings.value)
+  },
+  update() {
 
+  },
+  inserted() {
+
+  }
+})
 Vue.config.productionTip = false
 Vue.use(ElementUI)// 使用element-ui框架
 /* eslint-disable no-new */

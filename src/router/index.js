@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import defaultPage from '@/layout/default.vue'// 默认模板页面
 import blankPage from '@/layout/blank.vue'// 其他页面  空白
 import indexPage from '@/page/index.vue'// 首页页面  将中间展示区域放在嵌套路由里面
+import changeCity from '@/page/changeCity.vue'// 首页页面  将点击切换城市组件区域放在嵌套路由里面
 
 Vue.use(Router)
 
@@ -18,6 +19,11 @@ export default new Router({
           path: '/index',
           name: 'index',
           component: indexPage
+        },
+        {
+          path: '/changeCity',
+          name: 'changeCity',
+          component: changeCity
         }
       ]
     },
