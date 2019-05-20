@@ -19,5 +19,5 @@ export default {
 }
 </script>
 <style lang="scss">
-@import '@/assets/css/public/header/index.scss'
+@import '@/assets/css/public/header/index.scss'//该index样式是头部输出模板index.vue的样式
 </style>
