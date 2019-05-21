@@ -5,16 +5,17 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'// 引入element-ui框架
 import 'element-ui/lib/theme-chalk/index.css'
+import store from './store.js'// 引入vuex状态管理(可以共用同一个数据)
 
-import '@/assets/css/main.css';
-Vue.directive('document-click',{
-  bind(el,bindings,vnode) {
-      document.addEventListener('click',bindings.value)
+import '@/assets/css/main.css'
+Vue.directive('document-click', {
+  bind (el, bindings, vnode) {
+    document.addEventListener('click', bindings.value)
   },
-  update() {
+  update () {
 
   },
-  inserted() {
+  inserted () {
 
   }
 })
@@ -24,6 +25,7 @@ Vue.use(ElementUI)// 使用element-ui框架
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

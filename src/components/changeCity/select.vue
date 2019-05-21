@@ -9,7 +9,8 @@
                 <h2>{{title}}</h2>
                 <div class="wrapper">
                     <div class="col">
-                        <span class="mt-item" v-for="(item,index) in list" :key="index">{{item}}</span>
+                        <!-- 动态绑定class  当前点击的那个span标签省份或者城市和传递过来的value值城市或者省份相同的话就添加active -->
+                        <span :class="{'mt-item': true,'active' : item == value}" v-for="(item,index) in list" :key="index" @click="changeValue(item)">{{item}}</span>
                     </div>
                 </div>
             </div>
@@ -36,6 +37,11 @@ export default {
             // this.showWrapperActive = false
             // 传递方法和参数到父组件身上  传递false,点击document区域就隐藏省份和城市列表
             this.$emit('change_active',false)
+        },
+        // 通过province.vue组件传递的参数list省份和城市的数据 来实现点击哪一个然后输入框也渲染成点击的那一个
+        changeValue(item) {
+            // 给父组件传递自定义事件change和当前点击的城市或者省份item为参数
+            this.$emit('change',item)
         }
     }
 }

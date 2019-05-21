@@ -4,10 +4,12 @@ import defaultPage from '@/layout/default.vue'// 默认模板页面
 import blankPage from '@/layout/blank.vue'// 其他页面  空白
 import indexPage from '@/page/index.vue'// 首页页面  将中间展示区域放在嵌套路由里面
 import changeCity from '@/page/changeCity.vue'// 首页页面  将点击切换城市组件区域放在嵌套路由里面
+import goodsList from '@/page/goodsList.vue'// 首页页面  将商品列表组件区域放在嵌套路由里面
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history', // 配置跳转时没有#,刷新页面
   routes: [
     {
       path: '/',
@@ -24,6 +26,11 @@ export default new Router({
           path: '/changeCity',
           name: 'changeCity',
           component: changeCity
+        },
+        {
+          path: 's/:name',
+          name: 'goods',
+          component: goodsList
         }
       ]
     },
