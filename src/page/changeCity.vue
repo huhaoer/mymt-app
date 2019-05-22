@@ -18,13 +18,23 @@
 import MProvince from '@/components/changeCity/province.vue';//引入按省份选择组件
 import HotCity from '@/components/changeCity/hot.vue';//引入热门城市组件
 import Categroy from '@/components/changeCity/categroy.vue';//引入按拼音首字母选择的组件
-
+import api from '@/api/index.js'
 export default {
     data() {
         return {
-            hotList: ['北京','上海','广州','深圳','天津','西安','西安','杭州','南京','武汉','成都'],//传递给hot-city组件,热门城市
-            rencentList: ['成都'],
+            hotList: [],//传递给hot-city组件,热门城市
+            rencentList: [],
         }
+    },
+    created() {
+        api.getHotCity().then(res => {
+            // console.log(res)
+            this.hotList = res.data.data
+        }),
+        api.getRecentCity().then(res => {
+            // console.log(res)
+            this.rencentList = res.data.data
+        })
     },
     components: {
         MProvince,

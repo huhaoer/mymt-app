@@ -33,10 +33,11 @@
 </template>
 <script>
 import MSelect from "./select.vue";
+import api from '@/api/index.js'
 export default {
   data() {
     return {
-      provinceList: ["山东", "甘肃", "江苏", "北京", "云南"], //传递给selecr.vue组件 省份数据
+      provinceList: ["山东", "甘肃", "江苏", "北京", "云南"], //传递给select.vue组件 省份数据
       province: "省份", //绑定传入到select页面的选择框的省份数据
       cityList: ["哈尔滨", "佳木斯", "牡丹江", "鹤岗"], //传递给selecr.vue 城市的数据
       city: "城市", //绑定城市的数据
@@ -77,6 +78,12 @@ export default {
     changeCity(value) {
         this.city = value
     }
+  },
+  created() {
+    api.getProvince().then(res => {
+      console.log(res)
+      this.provinceList = res.data.data
+    })
   }
 };
 </script>

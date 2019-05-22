@@ -6,7 +6,7 @@
             </el-col>
             <el-col :span="15" class="center">
                 <div class="wrapper">
-                    <el-input v-model="searchWord" placeholder="请输入内容" @focus="focus" @blur="blur"></el-input>
+                    <el-input v-model="searchWord" placeholder="搜索商家或地点" @focus="focus" @blur="blur" @input="input"></el-input>
                     <el-button type="primary" icon="el-icon-search"></el-button>
                     <dl class="hotPlace" v-if="isHotPlace">
                         <dt>热门搜索</dt>
@@ -28,15 +28,24 @@
     </div>
 </template>
 <script>
+import api from '@/api/index.js'//引入请求数据的封装对象方法api
 export default {
     data() {
         return {
             searchWord : '',
             isFocus : false,//用来判断输入框是否聚焦状态 来显示热门搜索还是搜索列表
-            hotPlaceList: ['大熊猫繁育基地','国色天香水上乐园','成都欢乐谷',''],//动态渲染热点地方
-            searchList: ['三圣乡','三顾冒菜','三缺一'],//动态渲染搜索列表地方
-            suggestList: ['京东第一温泉度假村','99旅馆连锁','尚客优快捷酒店','7天连锁酒店']//动态渲染推荐列表数据
+            hotPlaceList: [],//动态渲染热点地方
+            searchList: [],//动态渲染搜索列表地方
+            suggestList: []//动态渲染推荐列表数据
         }
+    },
+    // 发起axios请求  用于渲染热门搜索的列表
+    created() {
+        api.getSearchHot().then(res => {
+            //获取热门搜索的数据,然后动态添加到data数据里
+            this.hotPlaceList = res.data.data.slice(0,5);
+            this.suggestList = res.data.data;
+        })
     },
     computed: {
         isHotPlace() {
@@ -57,12 +66,20 @@ export default {
                 self.isFocus = false
             }, 200);
 
+        },
+        input() {
+            api.getSearchList().then(res => {
+                // console.log(res)
+                this.searchList = res.data.data.list.filter(item => {
+                    // 过滤  判断请求回来的数据是否含有输入的关键字,有才保存到searchList里
+                    return item.indexOf(this.searchWord) > -1
+                })
+            })
         }
     }
 }
 </script>
 <style lang="scss">
-    // @import '@/assets/css/public/header/search.scss';
-    // @import '@/assets/css/public/header/index.scss'
+
 </style>
 

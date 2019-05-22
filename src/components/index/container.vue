@@ -1,7 +1,7 @@
 <template>
   <div class="m-istyle">
     <dl @mouseover="over" :class="nav.class">
-        <!-- 冬天添加传入的类名,可以在scss样式里面根据类名修改不同的样式 -->
+        <!-- 动态添加传入的类名,可以在scss样式里面根据类名修改不同的样式 -->
       <dt>{{nav.title}}</dt>
       <dd
         v-for="(item,index) in nav.list"
@@ -11,36 +11,36 @@
       >{{item.text}}</dd>
     </dl>
     <ul class="ibody">
-      <li v-for="(item,index) in list" :key="index">
+      <li v-for="(item,index) in resultsData[kind]" :key="index">
         <el-card :body-style="{ padding: '0px' }" shadow="never">
           <img :src="item.image" class="image">
           <div style="padding: 14px;" class="cbody">
             <div class="title" :title="item.title">{{item.title}}</div>
-            <div class="sub-title" :title="item.sub_title">{{item.sub_title}}</div>
+            <div class="sub-title" :title="item.subTitle">{{item.subTitle}}</div>
             <!-- 判断显示价格  有剩余数量rentNum且有当前价格cur_price就显示正常价格 -->
-            <div class="price-info" v-if="item.rentNum && item.price_info.cur_price">
+            <div class="price-info">
               <span class="current-price-wrapper">
                 <span class="price-symbol numfont">￥</span>
-                <span class="current-price numfont">{{item.price_info.cur_price}}</span>
+                <span class="current-price numfont">{{item.price}}</span>
               </span>
-              <span class="old-price">门市价￥{{item.price_info.old_price}}</span>
+              <!-- <span class="old-price">门市价￥{{item.price_info.old_price}}</span> -->
               <span class="sold bottom-right-info">{{item.address}}</span>
             </div>
             <!-- 判断显示是否抢光了 当剩余数量rentNum为0或者是没有的话就显示抢光了  -->
-            <div class="price-info" v-else-if="!item.rentNum">
+            <!-- <div class="price-info" v-else-if="!item.rentNum">
                 <span class="current-price-wrapper">
                     <span class="price-symbol numfont">￥</span>
                     <span class="current-price numfont">抢光了</span>
                 </span>
-            </div>
+            </div> -->
             <!-- 判断显示人均价格  有剩余数量rentNum且当前价格cur_price不存在的话显示人均价格 -->
-            <div class="price-info" v-else>
+            <!-- <div class="price-info" v-else>
                 <span class="current-price-wrapper">
                     <span class="price-symbol numfont">￥</span>
                     <span class="current-price numfont">{{item.price_info.avg_price}}</span>
                     <span class="units">/{{item.price_info.units}}均</span>
                 </span>
-            </div>
+            </div> -->
           </div>
         </el-card>
       </li>
@@ -48,10 +48,12 @@
   </div>
 </template>
 <script>
+import api from '@/api/index.js'
 export default {
   data() {
     return {
       kind: "all", //用于判断当前鼠标指向的那一个标签来展示信息 默认展示全部
+      resultsData: {},//用于保存获取回来的数据,是一个对象,然后鼠标指向哪一个标题就用kind动态渲染哪一个的数据
       list: [
         {
           image:
@@ -128,6 +130,12 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    api.getYouGeDiao().then(res => {
+      // console.log(res)
+      this.resultsData = res.data.data
+    })
   },
   props: ["nav"], //注册接收从index.vue页面传递的信息  本页面动态渲染
   methods: {

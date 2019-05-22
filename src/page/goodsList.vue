@@ -6,10 +6,10 @@
         <el-row>
             <el-col :span="19">
                 <el-row>
-                    categroy
+                    <categroy />
                 </el-row>
                 <el-row>
-                    list
+                    <list />
                 </el-row>
             </el-col>
             <el-col :span="5">
@@ -20,13 +20,17 @@
 </template>
 <script>
 import crumbs from '@/components/products/crumbs.vue'//引入面包屑组件
+import categroy from '@/components/products/categroy.vue'//引入分类和区域的组件
+import list from '@/components/products/list.vue'//引入展示商品列表的组件
 export default {
     components: {
-        crumbs
+        crumbs,
+        categroy,
+        list
     }
 }
 </script>
 <style lang="scss">
-@import '@/assets/css/products/index.scss'
+@import '@/assets/css/products/index.scss';
 </style>
 

@@ -10,7 +10,7 @@
                 <div class="wrapper">
                     <div class="col">
                         <!-- 动态绑定class  当前点击的那个span标签省份或者城市和传递过来的value值城市或者省份相同的话就添加active -->
-                        <span :class="{'mt-item': true,'active' : item == value}" v-for="(item,index) in list" :key="index" @click="changeValue(item)">{{item}}</span>
+                        <span :class="{'mt-item': true,'active' : item == value}" v-for="(item,index) in list" :key="index" @click="changeValue(item)">{{item.provinceName}}</span>
                     </div>
                 </div>
             </div>
