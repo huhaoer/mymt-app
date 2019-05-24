@@ -4,9 +4,9 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
-    position: '成都'
+    position: {}
   },
-  mutation: {
+  mutations: {
     setPosition (state, val) {
       state.position = val
     }

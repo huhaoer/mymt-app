@@ -7,10 +7,10 @@
             <div :class="{'mt-content' : true,'active' : showWrapperActive}">
                 <!-- showWrapperActive 父组件传递,判断是否展示省份或者城市列表 -->
                 <h2>{{title}}</h2>
-                <div class="wrapper">
-                    <div class="col">
+                <div :class="['wrapper',className]">
+                    <div class="col" v-for="(listData,index) in renderList" :key="index">
                         <!-- 动态绑定class  当前点击的那个span标签省份或者城市和传递过来的value值城市或者省份相同的话就添加active -->
-                        <span :class="{'mt-item': true,'active' : item == value}" v-for="(item,index) in list" :key="index" @click="changeValue(item)">{{item.provinceName}}</span>
+                        <span :class="{'mt-item': true,'active' : item.name == value}" v-for="(item,index) in listData" :key="index" @click="changeValue(item)">{{item.name}}</span>
                     </div>
                 </div>
             </div>
@@ -24,7 +24,21 @@ export default {
 
         }
     },
-    props:['list','value','title','showWrapperActive'],//引入注册province组件传过来的省份名称 title不会改变 value会随着点击而改变
+    created() {
+        // console.log(this.renderList)
+    },
+    computed: {
+        renderList() {
+            var col = Math.ceil( this.list.length / 12 );//一列最多12个,向上取整获取有多少列
+            var resultList = [];//用来接收分完组的数据
+            for(var i = 0;i < col;i ++) {
+                let data = this.list.slice(i * 12 ,i * 12 + 12)
+                resultList.push(data)
+            }
+            return resultList
+        }
+    },
+    props:['list','value','title','showWrapperActive','className'],//引入注册province组件传过来的省份名称 title不会改变 value会随着点击而改变
     methods: {
         //点击wrapper时展示出省份城市框
         showWrapper(e) {

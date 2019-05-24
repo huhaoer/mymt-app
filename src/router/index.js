@@ -5,6 +5,8 @@ import blankPage from '@/layout/blank.vue'// 其他页面  空白
 import indexPage from '@/page/index.vue'// 首页页面  将中间展示区域放在嵌套路由里面
 import changeCity from '@/page/changeCity.vue'// 首页页面  将点击切换城市组件区域放在嵌套路由里面
 import goodsList from '@/page/goodsList.vue'// 首页页面  将商品列表组件区域放在嵌套路由里面
+import Login from '@/page/login.vue'// 首页页面  将登陆页面引入到blank里面
+import Register from '@/page/register.vue'// 首页页面  将注册页面引入到blank里面
 
 Vue.use(Router)
 
@@ -37,7 +39,19 @@ export default new Router({
     {
       path: '/blank',
       name: 'blank',
-      component: blankPage
+      component: blankPage,
+      children: [
+        {
+          path: 'login',
+          name: 'login',
+          component: Login
+        },
+        {
+          path: 'register',
+          name: 'register',
+          component: Register
+        }
+      ]
     }
   ]
 })

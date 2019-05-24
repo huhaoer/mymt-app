@@ -8,6 +8,7 @@
       :showWrapperActive="provinceActive"
       @change_active="changeProvinceActive"
       @change="changeProcince"
+      className="province"
     />
     <m-select
       :list="cityList"
@@ -16,6 +17,7 @@
       :showWrapperActive="cityActive"
       @change_active="changeCityActive"
       @change="changeCity"
+      className="city"
     />
     <span>直接搜索:</span>
     <el-select
@@ -72,17 +74,24 @@ export default {
       console.log(val);
     },
     // 父组件身上自定义事件 change,通过子组件传递$emit事件和参数
-    changeProcince(value) {
-        this.province = value
+    changeProcince(item) {
+        this.province = item.name
+        this.cityList = item.cityInfoList
     },
-    changeCity(value) {
-        this.city = value
+    changeCity(item) {
+        this.city = item.name
+        // 同步地理位置  将select组件传递过来的listData遍历的每一项作为参数传递到state的position对象身上
+        this.$store.dispatch('setPosition',item)
+        this.$router.push({name: 'index'})//点击完城市后跳转到index页面
     }
   },
   created() {
     api.getProvince().then(res => {
-      console.log(res)
-      this.provinceList = res.data.data
+      this.provinceList = res.data.data.map(item => {
+        item.name = item.provinceName
+        return item
+      })
+
     })
   }
 };

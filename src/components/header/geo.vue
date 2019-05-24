@@ -2,14 +2,12 @@
     <div class="m-geo">
         <div class="position">
             <i class="el-icon-location" />
-            北京
+            {{$store.state.position.name}}
             <router-link :to="{name : 'changeCity'}" class="changeCity">
                 切换城市
             </router-link>
             [
-                <a href="#">新津县</a>
-                <a href="#">崇州</a>
-                <a href="#">彭州</a>
+                <a href="#" v-for="(item,index) in nearCity" :key="index"> {{item.name}} </a>
             ]
         </div>
         <div class="m-user">
@@ -22,3 +20,28 @@
         </div>
     </div>
 </template>
+<script>
+import api from '@/api/index.js'
+export default {
+    data() {
+        return {
+            // 地理位置后面的县等具体位置
+            nearCity: []
+        }
+    },
+    watch: {
+        '$store.state.position': function () {
+            this.nearCity =  this.$store.state.position.nearCity
+        }
+    },
+    created() {
+        api.getCurrentPosition().then(res => {
+            console.log(res)
+            // 获取到当前的地理位置,通过dispatch传递到vuex的position对象里
+            this.$store.dispatch('setPosition',res.data.data)
+            this.nearCity = res.data.data.nearCity//将后面的具体位置传递到data数据里
+        })
+    }
+}
+</script>
+
