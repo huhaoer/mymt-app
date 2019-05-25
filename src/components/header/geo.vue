@@ -10,7 +10,7 @@
                 <a href="#" v-for="(item,index) in nearCity" :key="index"> {{item.name}} </a>
             ]
         </div>
-        <div class="m-user">
+        <div class="m-user" v-if="!$store.state.userName">
             <router-link :to="{name : 'login'}" class="login">
                 立即登录    
             </router-link>

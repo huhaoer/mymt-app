@@ -47,8 +47,16 @@ var api = {
     return axios.get('/api/meituan/city/getPosition.json')
   },
   // 获取城市列表
-  getCityList() {
+  getCityList () {
     return axios.get('/api/meituan/city/cityList.json')
+  },
+  // 用户登陆接口
+  getLogin (params) {
+    return axios.get('/api/meituan/login', params)
+  },
+  // 用户注册接口
+  getRegister(params) {
+    return axios.get('/api/meituan/register', params)
   }
 }
 // 导出api对象 数据请求时引入该文件,然后api.XXX()执行上面的数据请求
